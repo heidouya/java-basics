@@ -25,7 +25,7 @@
 git clone https://github.com/heidouya/java-basics
 ```
 1. 导入 IDE（推荐 IntelliJ IDEA 或 Eclipse）
-2. 按顺序学习：从 basics 包开始，逐步深入
+2. 按顺序学习：从 day01 模块开始，逐步深入
 3. 动手实践：每个示例都建议自己敲一遍，尝试修改和扩展
 
 ## 📖 推荐学习路线
