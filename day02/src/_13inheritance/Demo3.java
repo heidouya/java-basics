@@ -1,7 +1,7 @@
 package _13inheritance;
 
 /*
-    @Override是Java中的一个注解（Annotation），用于标识一个方法声明打算重写父类或接口中的方法。它是一个编译时注解，不会影响代码运行。
+    @Override：@Override是Java中的一个注解（Annotation），用于标识一个方法声明打算重写父类或接口中的方法。它是一个编译时注解，不会影响代码运行。
 
     子类可以通过 @Override 重写父类方法，重写规则：
     1. 方法名、参数列表必须相同
