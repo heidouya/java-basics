@@ -2,7 +2,7 @@ package _14polymorphism;
 
 /*
     抽象类：抽象类是使用abstract关键字修饰的类，它不能被实例化，主要用于定义子类的通用模板，可以包含抽象方法和具体方法。
-    比如前面的例子中可以将“鸿蒙设备”定义为一个抽象类 —— 定义所有设备都必须有powerOn()方法，但不同设备（手机 / 平板）的开机逻辑不同，所以抽象类只声明方法，不写具体实现，让子类去补全。
+    比如前面的例子中可以将“鸿蒙设备”定义为一个抽象类 —— 定义所有设备都必须有powerOn()方法，但不同设备（手机 / 平板 / 手表）的开机逻辑不同，所以抽象类只声明方法，不写具体实现，让子类去补全。
 
     抽象类 vs 普通类：
     ------------------------------------------------
@@ -67,6 +67,21 @@ public class Demo5 {
 
         phone.powerOn(); // 执行子类实现的开机逻辑
         phone.showDeviceId(); // 复用抽象类的普通方法
+
+        // 下面代码用来解释为什么抽象类的抽象方法不能省略
+        HarmonyDevice2 watch = new HarmonyWatch();
+        watch.deviceId = "HM1002";
+
+        HarmonyDevice2 pad = new HarmonyPad2();
+        pad.deviceId = "HM1003";
+
+        powerOn(watch);
+        powerOn(pad);
+    }
+
+    public static void powerOn(HarmonyDevice2 device) {
+        // 如果抽象类中的抽象方法省略不写，这里就找不到对应的方法，会报错
+        device.powerOn();
     }
 }
 
@@ -75,6 +90,7 @@ abstract class HarmonyDevice2 {
     protected String deviceId;
 
     // 抽象方法：只声明，无实现（子类必须重写）
+    // 这个方法可以省略吗？答：不能，为了实现多态
     public abstract void powerOn();
 
     // 普通方法：有实现，子类可直接复用
@@ -88,5 +104,19 @@ class HarmonyPhone2 extends HarmonyDevice2 {
     @Override
     public void powerOn() {
         System.out.println(deviceId + "：手机开机，连接蓝牙");
+    }
+}
+
+class HarmonyWatch extends HarmonyDevice2 {
+    @Override
+    public void powerOn() {
+        System.out.println(deviceId + "：手表开机");
+    }
+}
+
+class HarmonyPad2 extends HarmonyDevice2 {
+    @Override
+    public void powerOn() {
+        System.out.println(deviceId + "：Pad开机");
     }
 }
