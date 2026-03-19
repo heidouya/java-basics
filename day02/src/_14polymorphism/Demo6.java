@@ -1,12 +1,30 @@
 package _14polymorphism;
 
-/*
-    interface 中的多态
-*/
+/*静态方法示例2 - 工厂方法*/
 public class Demo6 {
     public static void main(String[] args) {
-        DrawingApp app = new DrawingApp();
-        app.drawShape(new Circle());     // 输出：画圆形
-        app.drawShape(new Rectangle());  // 输出：画矩形
+        Animal dog = AnimalFactory.createAnimal("dog");
+        Animal cat = AnimalFactory.createAnimal("cat");
     }
 }
+
+class AnimalFactory {
+    // 静态工厂方法
+    public static Animal createAnimal(String type) {
+        switch (type.toLowerCase()) {
+            case "dog":
+                return new Dog2();
+            case "cat":
+                return new Cat2();
+            case "bird":
+                return new Bird2();
+            default:
+                throw new IllegalArgumentException("未知动物类型: " + type);
+        }
+    }
+}
+
+class Animal2 {}
+class Dog2 extends Animal {}
+class Cat2 extends Animal{}
+class Bird2 extends Animal{}
