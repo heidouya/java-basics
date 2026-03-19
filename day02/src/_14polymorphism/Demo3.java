@@ -1,73 +1,98 @@
 package _14polymorphism;
 
-/* 多态示例1 */
+/*
+    静态变量和静态方法
+
+    static是Java中的一个关键字，表示"静态的"或"类级别的"。被static修饰的成员属于类本身，而不是属于某个对象实例。
+
+    静态变量（类变量）：用static修饰，属于整个类而非某个对象，所有对象共享同一份值，内存中仅存一份。
+    静态方法（类方法）：用static修饰，属于类，可直接通过类名调用，无需创建对象，且不能访问非静态成员（普通变量 / 方法）。
+
+    静态变量 / 方法 vs 非静态变量 / 方法：
+    -----------------------------------------------------------
+    特性	            静态变量 / 方法	        非静态变量 / 方法
+    -----------------------------------------------------------
+    所属对象	        属于类（全局共享）	        属于单个对象
+    -----------------------------------------------------------
+    调用方式	        类名.变量 / 方法	        对象名.变量 / 方法
+    -----------------------------------------------------------
+    内存加载时机	    类加载时就创建	        创建对象时才创建
+    -----------------------------------------------------------
+    访问限制	        不能访问非静态成员	        可访问静态 / 非静态成员
+    -----------------------------------------------------------
+
+    静态方法的特点和限制：
+    1. 静态方法可以直接访问静态变量
+    2. 静态方法不能直接访问实例变量
+    3. 静态方法如果想访问实例变量需要通过对象引用来访问
+    4. 静态方法可以调用其他静态方法
+    5. 静态方法不能调用非静态方法
+
+    静态变量的特点：
+    1. 属于类，所有对象共享
+    2. 类加载时初始化
+    3. 存在方法区
+    4. 可以通过类名直接访问
+
+    静态方法的特点：
+    1. 属于类，可以直接调用
+    2. 不能直接访问实例成员
+    3. 不能使用this和super
+    4. 常用于工具类、工厂方法
+
+    使用建议：
+    1. 工具类使用静态方法
+    2. 常量使用public static final
+    3. 需要共享数据时使用静态变量
+    4. 单例模式使用静态方法获取实例
+    5. 避免滥用静态成员（增加耦合，难以测试）
+
+    总结
+    1. 静态成员（变量 / 方法）属于类，全局共享，优先于对象存在，直接用类名调用；
+    2. 非静态成员属于对象，每个对象独有，必须创建对象才能使用；
+    3. 静态方法的核心限制：不能访问非静态成员，也不能用this/super关键字。
+*/
 public class Demo3 {
     public static void main(String[] args) {
-        PaymentService service = new PaymentService();
+        // 1. 静态变量/方法：直接通过类名调用，无需new对象
+        System.out.println(Student.school); // 输出：北京大学
+        Student.showSchool(); // 输出：学校：北京大学
 
-        service.processPayment(new Alipay(100));
-        service.processPayment(new WechatPay(200));
-        service.processPayment(new CreditCardPay(500, "1234-5678"));
+        // 2. 非静态变量/方法：必须创建对象调用
+        Student stu = new Student();
+        stu.name = "张三";
+        stu.showInfo(); // 输出：姓名：张三，学校：北京大学
+
+        // 3. 静态变量被所有对象共享
+        Student stu2 = new Student();
+        stu2.name = "李四";
+        Student.school = "清华大学"; // 修改静态变量
+        stu.showInfo(); // 输出：姓名：张三，学校：清华大学
+        stu2.showInfo(); // 输出：姓名：李四，学校：清华大学
+
+        Student.showSchool2(stu);
     }
 }
+class Student {
+    // 静态变量：所有学生共享的学校名称
+    public static String school = "北京大学";
+    // 非静态变量：每个学生独有的姓名
+    public String name;
 
-// 支付抽象类
-abstract class Payment {
-    protected double amount;
-
-    public Payment(double amount) {
-        this.amount = amount;
+    // 静态方法：直接通过类名调用
+    public static void showSchool() {
+        System.out.println("学校：" + school);
+        // 错误：静态方法不能访问非静态变量name
+        // 如果非要访问需要通过对象引用，也就是把对象实例的引用当参数传递过来，详见 showSchool2 方法
+        // System.out.println(name);
     }
 
-    public abstract void pay();
-}
-
-// 支付宝支付
-class Alipay extends Payment {
-    public Alipay(double amount) {
-        super(amount);
+    public static void showSchool2(Student student) {
+        System.out.println("showSchool2 " + student.name);
     }
 
-    @Override
-    public void pay() {
-        System.out.println("使用支付宝支付：" + amount + "元");
-        // 支付宝特有逻辑
-    }
-}
-
-// 微信支付
-class WechatPay extends Payment {
-    public WechatPay(double amount) {
-        super(amount);
-    }
-
-    @Override
-    public void pay() {
-        System.out.println("使用微信支付：" + amount + "元");
-        // 微信特有逻辑
-    }
-}
-
-// 信用卡支付
-class CreditCardPay extends Payment {
-    private String cardNumber;
-
-    public CreditCardPay(double amount, String cardNumber) {
-        super(amount);
-        this.cardNumber = cardNumber;
-    }
-
-    @Override
-    public void pay() {
-        System.out.println("使用信用卡支付：" + amount + "元");
-        System.out.println("卡号：" + cardNumber);
-    }
-}
-
-// 支付服务
-class PaymentService {
-    public void processPayment(Payment payment) {
-        payment.pay();  // 多态：根据实际类型执行不同逻辑
-        System.out.println("支付完成\n");
+    // 非静态方法：需创建对象调用，可访问静态/非静态成员
+    public void showInfo() {
+        System.out.println("姓名：" + name + "，学校：" + school);
     }
 }
