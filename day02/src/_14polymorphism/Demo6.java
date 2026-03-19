@@ -11,16 +11,12 @@ public class Demo6 {
 class AnimalFactory {
     // 静态工厂方法
     public static Animal createAnimal(String type) {
-        switch (type.toLowerCase()) {
-            case "dog":
-                return new Dog2();
-            case "cat":
-                return new Cat2();
-            case "bird":
-                return new Bird2();
-            default:
-                throw new IllegalArgumentException("未知动物类型: " + type);
-        }
+        return switch (type.toLowerCase()) {
+            case "dog" -> new Dog2();
+            case "cat" -> new Cat2();
+            case "bird" -> new Bird2();
+            default -> throw new IllegalArgumentException("未知动物类型: " + type);
+        };
     }
 }
 
