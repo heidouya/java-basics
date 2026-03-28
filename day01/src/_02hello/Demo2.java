@@ -12,6 +12,7 @@ package _02hello;
     8. 多行注释：Ctrl + Shift + /：块注释/取消注释。
     9. 多功能快捷键：Alt + Enter
     10. 全局搜索：Shift 连按两次
+    11. 大小写转换：Ctrl + Shift + U
 */
 public class Demo2 {
     public static void main(String[] args) {
