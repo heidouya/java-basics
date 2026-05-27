@@ -3,8 +3,8 @@ package _08loops;
 /*
     do…while 循环格式：
     do {
-      //代码语句
-    } while(条件表达式);
+      // 循环体
+    } while(循环条件);
 
     do…while 循环和 while 循环相似，不同的是，do…while 循环至少会执行一次。
 */
