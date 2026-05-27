@@ -2,15 +2,15 @@ package _08loops;
 
 /*
     for循环格式：
-    for(初始化; 条件表达式; 更新) {
-        // 代码语句
+    for (初始化; 循环条件; 迭代表达式) {
+        // 循环体
     }
 
     快捷键：fori 和 变量.fori 和 变量.forr
 
     Java中的增强 for 循环格式：
-    for(声明语句 : 表达式) {
-       //代码句子
+    for(元素类型 变量 : 数组或集合) {
+       // 循环体
     }
 */
 public class Demo3 {
