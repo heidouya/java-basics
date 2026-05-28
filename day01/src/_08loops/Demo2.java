@@ -1,19 +1,31 @@
 package _08loops;
 
 /*
-    do…while 循环格式：
-    do {
-      // 循环体
-    } while(循环条件);
-
-    do…while 循环和 while 循环相似，不同的是，do…while 循环至少会执行一次。
+    while循环格式：
+    while(循环条件) {
+      // 条件表达式为真时，需要循环执行的代码
+    }
 */
 public class Demo2 {
     public static void main(String[] args) {
-        int a = 2;
-        do {
-            System.out.println(a); // 2 1
-            a--;
-        } while(a > 0);
+        System.out.println("你好");
+        System.out.println("你好");
+        System.out.println("你好");
+
+
+        // 打印三次你好
+        int count = 0;
+        while (count < 3) {
+            System.out.println("你好");
+            count++;
+        }
+
+        // 求1到10的和
+        int i = 1, sum = 0;
+        while (i <= 5) {
+            sum += i;
+            i++;
+        }
+        System.out.println(sum); // 15
     }
 }

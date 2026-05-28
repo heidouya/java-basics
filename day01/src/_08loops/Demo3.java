@@ -1,34 +1,19 @@
 package _08loops;
 
 /*
-    for循环格式：
-    for (初始化; 循环条件; 迭代表达式) {
-        // 循环体
-    }
+    do…while 循环格式：
+    do {
+      // 循环体
+    } while(循环条件);
 
-    快捷键：fori 和 变量.fori 和 变量.forr
-
-    Java中的增强 for 循环格式：
-    for(元素类型 变量 : 数组或集合) {
-       // 循环体
-    }
+    do…while 循环和 while 循环相似，不同的是，do…while 循环至少会执行一次。
 */
 public class Demo3 {
     public static void main(String[] args) {
-        // 正序
-        for (int i = 0; i < 3; i++) {
-            System.out.println("你好" + i);
-        }
-
-        // 倒序
-        for (int i = 2; i >= 0; i--) {
-            System.out.println("你好" + i);
-        }
-
-        // 使用增强 for 循环遍历数组
-        int[] arr = {1, 2, 3};
-        for (int i : arr) {
-            System.out.println(i);
-        }
+        int a = 2;
+        do {
+            System.out.println(a); // 2 1
+            a--;
+        } while(a > 0);
     }
 }
