@@ -20,17 +20,35 @@ public class Demo4 {
         }
         System.out.println("-----使用标签（Label）跳出外层循环 break语句-----");
 
-        outer:
-        for (int i = 0; i < 5; i++) {
+
+        aa:for (int i = 0; i < 5; i++) {
+
             for (int j = 0; j < 5; j++) {
-                if (j == 2) {
-                    break outer;
-                }
-                System.out.println(STR."j = \{j}");
+                 for (int k = 0; k < 5; k++) {
+                     if (k == 2) {
+                         break aa;
+                     }
+                     System.out.println(STR."k = \{k}");
+                 }
+                 System.out.println(STR."j = \{j}");
             }
+            System.out.println(STR."i = \{i}");
         }
 
         System.out.println("------------while循环 break语句-----------");
+        int a = 1;
+        outer: while (a <= 5) {
+            int b = 0;
+            while (b <= 5) {
+                if (b == 3) {
+                    break outer;
+                }
+                System.out.println(STR."b = \{b}");
+                b++;
+            }
+            System.out.println(STR."a = \{a}");
+            a++;
+        }
 
         // break 跳出循环
         int i = 1;

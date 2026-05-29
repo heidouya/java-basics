@@ -30,6 +30,7 @@ public class Demo1 {
         System.out.println(4);
         System.out.println(5);
         //...省略
+        System.out.println(100);
 
         // for循环
         for (int i = 1; i <= 100; i++) {
