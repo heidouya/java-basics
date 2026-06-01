@@ -45,6 +45,19 @@ String s2 = s1.intern();
 12. endsWith()：判断是否以某字符串结尾
 13. indexOf()：获取某字符或子字符串第一次出现的位置
 14. lastIndexOf()：获取某字符或子字符串最后一次出现的位置
+
+字符串拼接：
+1. 使用 + 运算符可以拼接字符串，例如："Hello" + "World" 结果是 "HelloWorld"。
+2. 使用 concat() 方法可以拼接字符串，例如："Hello".concat("World") 结果是 "HelloWorld"。
+3. String.format()：格式化字符串，例如：String.format("Hello, %s!", "World") 结果是 "Hello, World!"。
+4. MessageFormat.format()：格式化字符串，例如：MessageFormat.format("Hello, {0}!", "World") 结果是 "Hello, World!"。
+5. StringBuilder：可变字符串，例如：StringBuilder sb = new StringBuilder("Hello"); sb.append("World") 结果是 "HelloWorld"。
+6. STR 处理器，例如：String msg = STR."我叫\{name}，今年\{age}岁。";
+
+字符串拼接总结：
+1. 循环内拼接 → 用 StringBuilder
+2. 少量简单拼接 → 用 + 完全 OK，代码更简洁
+3. 复杂模板格式化 → 用 String.format()，可读性更好
 */
 public class Demo3 {
     public static void main(String[] args) {
