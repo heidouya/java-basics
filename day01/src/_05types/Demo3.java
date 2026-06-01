@@ -81,5 +81,12 @@ public class Demo3 {
         System.out.println(s1.split(","));  // ["Hello"]
         // 获取字符
         System.out.println(s1.charAt(0));   // 'H'
+
+        // 多行字符串
+        String str = """
+                This is a multi-line string.
+                It can contain multiple lines.
+                """;
+        System.out.println(str);
     }
 }
