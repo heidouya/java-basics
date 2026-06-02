@@ -1,4 +1,4 @@
-package _exception;
+package _12exception;
 
 /*
 ## Java 中的异常（Exception）

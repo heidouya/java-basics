@@ -1,4 +1,4 @@
-package _exception;
+package _12exception;
 
 // 自定义受检异常
 public class InsufficientBalanceException extends Exception {
