@@ -1,50 +1,55 @@
 package _05types;
 /*
-字符串拼接
+在Java中，字符串常量池里存放的是地址还是真实的字符串数据呢？
 
-# Java 中的模板字符串
+在 Java 中，字符串常量池（String Pool / String Constant Pool）**存放的是 String 对象的引用（地址）**，而不是字符串的原始字符数据（`char[]`）。
 
-Java 并没有像 JavaScript（`${}`）、Python（f-string）或 Kotlin 那样的原生模板字符串语法，但有以下几种实现方式：
+具体来说，底层机制是这样的：
 
-## 1. 传统字符串拼接（不推荐）
+### 1. 字符串常量池的位置（JDK 7+）
+- **JDK 6 及之前**：常量池位于方法区（永久代 PermGen），存放的是 **String 对象实例**（包含 `char[]` 数据）。
+- **JDK 7 及之后**：常量池移到了**堆内存**中，但池中**只存储引用（地址）**，真正的字符串字符数据（`char[]`）作为普通对象存在于堆的其他区域。
+
+### 2. 实际存储结构
+当你写 `String s = "hello";` 时：
+1. JVM 先在堆中创建一个 String 对象，该对象的 `value` 字段指向一个 `char[]` 数组，数组中存储真实的字符数据 `['h', 'e', 'l', 'l', 'o']`。
+2. 然后将这个 String 对象的**引用（地址）**注册到字符串常量池中。
+3. 下次再出现 `"hello"` 字面量时，直接从常量池中取出之前的引用，避免重复创建对象。
+
+### 3. 验证示例
 ```java
-String name = "小明";
-int age = 18;
-String msg = "我叫" + name + "，今年" + age + "岁。";
+// 1. s1 = "hello"
+//    - JVM先检查字符串常量池中是否存在"hello"的引用
+//    - 常量池中不存在，于是在堆中创建一个String对象（其内部char[]存储['h','e','l','l','o']）
+//    - 将该String对象的引用（地址）放入字符串常量池
+//    - s1 指向常量池中的这个引用（即堆中的那个String对象）
+//    【常量池内容】: {"hello"的引用 -> 堆中String对象}
+String s1 = "hello";
+
+// 2. s2 = "hello"
+//    - JVM检查字符串常量池，发现已存在"hello"的引用
+//    - 直接返回常量池中已有的引用给s2，不创建新对象
+//    - s2 和 s1 指向堆中同一个String对象
+//    【常量池内容】: {"hello"的引用 -> 堆中String对象}（不变）
+String s2 = "hello";
+
+// 3. s3 = new String("hello")
+//    - "hello"字面量：常量池中已存在，不再重复创建
+//    - new String(...)：在堆中强制创建一个【新的】String对象
+//      该新对象的char[]内容也是['h','e','l','l','o']，但它是独立的堆对象
+//    - s3 指向这个新创建的堆对象，与常量池中的引用无关
+//    【常量池内容】: {"hello"的引用 -> 堆中原String对象}（不变）
+//    【堆中新增】: 一个新的String对象（s3指向它）
+//
+//    总结：此行代码创建了1个新对象（new出来的），若常量池中无"hello"则会创建2个对象
+String s3 = new String("hello");
+
+System.out.println(s1 == s2); // true，指向常量池中同一个引用
+System.out.println(s1 == s3); // false，s3 是 new 出的新对象，引用不同
+System.out.println(s1 == s3.intern()); // true，intern() 返回常量池中的引用
 ```
 
-## 2. `String.format()`（推荐）
-```java
-String msg = String.format("我叫%s，今年%d岁。", name, age);
-```
-
-## 3. `MessageFormat`（适合复杂模板）
-```java
-String msg = MessageFormat.format("我叫{0}，今年{1}岁。", name, age);
-```
-
-
-## 4. `StringBuilder`（大量拼接时）
-```java
-String msg = new StringBuilder()
-    .append("我叫").append(name)
-    .append("，今年").append(age).append("岁。")
-    .toString();
-```
-
-## 5. Java 21 预览特性：**字符串模板**
-Java 21 引入了 `STR` 处理器作为预览特性（JDK 23 仍未转正）：
-```java
-String msg = STR."我叫\{name}，今年\{age}岁。";
-```
-
-- 使用 `STR` 模板处理器
-- 内嵌表达式用 `\{ }` 语法
-- 目前仍是预览功能，需 `--enable-preview` 开启
-
----
-
-**实际项目中最常用的是** `String.format()` 和 `MessageFormat`。如果你想要像 JS/Python 那种 `"Hello ${name}"` 的体验，目前 Java 还没有稳定的原生支持，需要等字符串模板特性正式转正。
+**总结**：字符串常量池本质上是一个 `HashSet<String>`（引用集合），池中保存的是已经 intern 过的 String 对象的**引用地址**，而真正的字符数组数据作为对象属性存储在堆内存中。这样做的好处是节省内存：池只需要管理引用（4 或 8 字节），而非复制整个字符数组。
 */
 public class Demo4 {
 }
