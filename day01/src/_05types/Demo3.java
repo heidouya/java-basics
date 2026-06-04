@@ -1,5 +1,7 @@
 package _05types;
 
+import java.time.Instant;
+
 /*
 字符串是 Java 中的一种数据类型，用于表示一串文字或字符。字符串用双引号包裹。
 
@@ -101,5 +103,26 @@ public class Demo3 {
                 It can contain multiple lines.
                 """;
         System.out.println(str);
+
+        // 字符串拼接
+        String s = """
+                Life doesn't always give us the joys we want. We don't always get our hopes and dreams, and we don't always get our own way. But don't give up hope, because you can make a difference one situation and one person at a time. Look for the beauty around you—in nature, in others, in yourself—and believe in the love of friends, family, and humankind. You can find love in a smile or a helping hand, in a thoughtful gesture or a kind word. It is all around, if you just look for it
+                """;
+
+        String ss = "";
+        long start1 = Instant.now().toEpochMilli();
+        for (int i = 0; i < 1000 ; i++){
+            ss += s;
+        }
+        long end1 = Instant.now().toEpochMilli();
+        System.out.println(STR."使用 + 拼接字符串耗时：\{end1 - start1} 毫秒");
+
+        StringBuffer sb = new StringBuffer();
+        long start2 = Instant.now().toEpochMilli();
+        for (int i = 0; i < 1000 ; i++){
+            sb.append(s);
+        }
+        long end2 = Instant.now().toEpochMilli();
+        System.out.println(STR."使用 StringBuffer 拼接字符串耗时：\{end2 - start2} 毫秒");
     }
 }
