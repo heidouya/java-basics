@@ -1,4 +1,4 @@
-package _10functions;
+package _11functions;
 
 /*
 方法（Method，也叫函数 Function）是一段封装好的、可重复调用的代码块，用来完成特定功能 —— 你可以把它理解成「编程里的 “工具”」：提前造好工具，需要时直接用，不用重复造轮子。

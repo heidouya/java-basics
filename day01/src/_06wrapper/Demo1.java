@@ -1,4 +1,4 @@
-package wrapper;
+package _06wrapper;
 
 /*
 ## Java 包装类（Wrapper Classes）

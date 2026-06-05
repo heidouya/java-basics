@@ -1,4 +1,4 @@
-package _07branches;
+package _08branches;
 
 /*
 switch...case 是 Java 提供的多分支选择语句，根据表达式的值匹配对应的 case 分支执行代码，比多个 if...else if 更简洁清晰。
