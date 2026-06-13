@@ -1,4 +1,7 @@
 package _io;
+
+import java.io.*;
+
 /*
 ## Java IO 流简介
 
@@ -59,4 +62,95 @@ try (BufferedReader br = new BufferedReader(new FileReader("test.txt"))) {
 - **转换流** → 桥接字节流和字符流，解决编码问题
 */
 public class Demo1 {
+    public static void main(String[] args) {
+        writeFile1("FileWriter");
+        writeFile2("FileOutputStream");
+
+        System.out.println("----------FileReader---------");
+        readFile1();
+        System.out.println("----------FileReader---------");
+        readFile2();
+
+        System.out.println("----------FileInputStream---------");
+        readFile3();
+        System.out.println("----------FileInputStream---------");
+        readFile4();
+    }
+
+    public static void writeFile1(String content) {
+        try (
+                FileWriter fileWriter = new FileWriter("./hello.txt")
+        ) {
+            fileWriter.write(content);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void writeFile2(String content) {
+        try (
+                FileOutputStream fileOutputStream = new FileOutputStream("./hello.txt")
+        ) {
+            fileOutputStream.write(content.getBytes());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void readFile1() {
+        // FileReader - 读文本，按字符读
+        try (
+                FileReader fr = new FileReader("./hello.txt")
+        ){
+            int len;
+            while ((len = fr.read()) != -1) {
+                System.out.println((char) len);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void readFile2() {
+        // FileInputStream - 读二进制，按字节读
+        try (
+                FileReader fr = new FileReader("./hello.txt")
+        ){
+            char[] buf = new char[50];
+            int len;
+            while ((len = fr.read(buf)) != -1) {
+                System.out.println(new String(buf, 0, len));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void readFile3() {
+        try (
+                FileInputStream fileInputStream = new FileInputStream("./hello.txt")
+        ) {
+            int data = fileInputStream.read();
+            while (data != -1) {
+                System.out.println((char) data);
+                data = fileInputStream.read();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void readFile4() {
+        try (
+                FileInputStream fileInputStream = new FileInputStream("./hello.txt")
+        ) {
+            byte[] buf = new byte[50];
+            int len;
+            while ((len = fileInputStream.read(buf)) != -1) {
+                System.out.println(new String(buf, 0, len));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
