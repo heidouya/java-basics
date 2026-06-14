@@ -63,18 +63,22 @@ try (BufferedReader br = new BufferedReader(new FileReader("test.txt"))) {
 */
 public class Demo1 {
     public static void main(String[] args) {
-        writeFile1("FileWriter");
-        writeFile2("FileOutputStream");
+        writeFile1("你好，FileWriter");
+        writeFile2("你好，BufferedWriter");
+        writeFile3("你好，FileOutputStream");
 
         System.out.println("----------FileReader---------");
         readFile1();
         System.out.println("----------FileReader---------");
         readFile2();
 
-        System.out.println("----------FileInputStream---------");
+        System.out.println("----------BufferedReader---------");
         readFile3();
+
         System.out.println("----------FileInputStream---------");
         readFile4();
+        System.out.println("----------FileInputStream---------");
+        readFile5();
     }
 
     public static void writeFile1(String content) {
@@ -88,6 +92,17 @@ public class Demo1 {
     }
 
     public static void writeFile2(String content) {
+        try (
+                FileWriter fileWriter = new FileWriter("./hello.txt");
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)
+        ) {
+            bufferedWriter.write(content);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void writeFile3(String content) {
         try (
                 FileOutputStream fileOutputStream = new FileOutputStream("./hello.txt")
         ) {
@@ -127,6 +142,17 @@ public class Demo1 {
     }
 
     public static void readFile3() {
+        try (BufferedReader br = new BufferedReader(new FileReader("./hello.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void readFile4() {
         try (
                 FileInputStream fileInputStream = new FileInputStream("./hello.txt")
         ) {
@@ -140,7 +166,7 @@ public class Demo1 {
         }
     }
 
-    public static void readFile4() {
+    public static void readFile5() {
         try (
                 FileInputStream fileInputStream = new FileInputStream("./hello.txt")
         ) {
