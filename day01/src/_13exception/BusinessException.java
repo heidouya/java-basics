@@ -1,4 +1,4 @@
-package _12exception;
+package _13exception;
 
 // 自定义运行时异常
 public class BusinessException extends RuntimeException {
