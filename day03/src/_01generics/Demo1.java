@@ -1,4 +1,4 @@
-package _13generics;
+package _01generics;
 /*
 # Java 泛型（Generics）简要介绍
 
@@ -156,9 +156,36 @@ System.out.println(list1.getClass() == list2.getClass()); // true
 
 ---
 
+## 核心要点对比
+
+| 特性 | 泛型类 | 泛型接口 | 泛型方法 |
+|------|--------|----------|----------|
+| 类型参数声明位置 | 类名后 `<T>` | 接口名后 `<T>` | 方法返回类型前 `<T>` |
+| 类型确定时机 | 创建实例时 | 实现接口时 | 调用方法时 |
+| 适用范围 | 整个类 | 整个接口 | 仅该方法 |
+
+**泛型的核心价值**：类型安全 + 代码复用——在编译期就检查类型错误，避免运行时 `ClassCastException`，同时减少重复代码。
+
 ## 一句话总结
 
 > **泛型 = 类型的模板化**，让代码在不牺牲类型安全的前提下实现通用性，是 Java 集合框架的设计基石，也是现代 Java 编程的基本功。
 */
 public class Demo1 {
+    public static void main(String[] args) {
+        String mid = getMiddle(new String[]{"a", "b", "c"});
+        System.out.println(mid);
+
+        printPair("name", 42);
+    }
+
+    // <T> 是方法级别的类型参数，与类无关
+    // 注意 静态方法不能使用类的泛型参数
+    public static <T> T getMiddle(T[] array) {
+        return array[array.length / 2];
+    }
+
+    // 多个类型参数
+    public static <K, V> void printPair(K key, V value) {
+        System.out.println(STR."\{key} = \{value}");
+    }
 }
