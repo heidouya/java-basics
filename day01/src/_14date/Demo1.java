@@ -124,6 +124,18 @@ public class Demo1 {
         // 直接打印 Date 对象（调用 toString()）
         System.out.println(STR."date1 = \{date1}");
 
+        
+        // 从 Date 对象中提取年、月、日、时、分、秒
+        // 注意：以下方法均来自 Java 8 之前的旧 API，已被标记为 @Deprecated，不推荐继续使用
+        // getYear() 返回的是“年份 - 1900”的偏移量，getMonth() 返回 0~11（0 表示一月），容易出错
+        int year1 = date1.getYear();
+        int month1 = date1.getMonth();
+        int day1 = date1.getDate();
+        int hour1 = date1.getHours();
+        int minute1 = date1.getMinutes();
+        int second1 = date1.getSeconds();
+        System.out.println(STR."year1 = \{year1}, month1 = \{month1}, day1 = \{day1}, hour1 = \{hour1}, minute1 = \{minute1}, second1 = \{second1}");
+
         // 获取时间戳（自1970年1月1日0时0分0秒以来的毫秒数）
         long time = date1.getTime();
         System.out.println(STR."time = \{time}");
@@ -157,6 +169,15 @@ public class Demo1 {
         // 获取当前日期+时间，如 2026-06-03T10:30:00.123
         LocalDateTime dt = LocalDateTime.now();
 
+        int year = dt.getYear();
+        int month = dt.getMonthValue();
+        int day = dt.getDayOfMonth();
+        int hour = dt.getHour();
+        int minute = dt.getMinute();
+        int second = dt.getSecond();
+        int nano = dt.getNano();
+        System.out.println(STR."year = \{year}, month = \{month}, day = \{day}, hour = \{hour}, minute = \{minute}, second = \{second}, nano = \{nano}");
+
         System.out.println(STR."today = \{today}");
         System.out.println(STR."now = \{now}");
         System.out.println(STR."dt = \{dt}");
@@ -186,13 +207,13 @@ public class Demo1 {
         System.out.println(STR."isBefore = \{isBefore}");
 
         // 获取年份，如 2026
-        int year = today.getYear();
+        int year2 = today.getYear();
         // 获取月份 1~12（注意：不是 0~11，比旧 API 更直观）
-        int month = today.getMonthValue();
+        int month2 = today.getMonthValue();
         // 获取星期几，返回枚举 DayOfWeek（如 TUESDAY）
         DayOfWeek dow = today.getDayOfWeek();
 
-        System.out.println(STR."year = \{year}, month = \{month}, dow = \{dow}");
+        System.out.println(STR."year2 = \{year2}, month2 = \{month2}, dow = \{dow}");
 
 
         System.out.println("-------------LocalTime（时间操作）-------------");  // 打印分隔线
