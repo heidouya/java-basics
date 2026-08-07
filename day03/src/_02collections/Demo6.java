@@ -1,5 +1,7 @@
 package _02collections;
 
+import java.util.TreeSet;
+
 /*
 # Java Set集合详解
 
@@ -153,4 +155,48 @@ List<String> newList = new ArrayList<>(set);
 
 */
 public class Demo6 {
+    public static void main(String[] args) {
+        TreeSet<Integer> treeSet = new TreeSet<>();
+
+        treeSet.add(3);
+        treeSet.add(2);
+        treeSet.add(1);
+
+        for (Integer i : treeSet) {
+            System.out.println(i);
+        }
+
+        //----------------------------------------
+
+        TreeSet<Student> treeSet2 = new TreeSet<>();
+
+        treeSet2.add(new Student("Alice", 35));
+        treeSet2.add(new Student("Bob", 30));
+        treeSet2.add(new Student("Charlie", 25));
+        treeSet2.add(new Student("David", 25));
+
+        for (Student s : treeSet2) {
+            System.out.println(s);
+        }
+    }
+}
+
+class Student implements Comparable<Student> {
+    String name;
+    int age;
+
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return STR."Student{name='\{name}\{'\''}, age=\{age}\{'}'}";
+    }
+
+    @Override
+    public int compareTo(Student o) {
+        return this.age - o.age != 0 ? this.age - o.age : this.name.compareTo(o.name);
+    }
 }
