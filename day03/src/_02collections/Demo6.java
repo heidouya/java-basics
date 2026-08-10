@@ -1,6 +1,8 @@
 package _02collections;
 
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.TreeSet;
 
 /*
@@ -179,6 +181,21 @@ public class Demo6 {
         for (Student s : treeSet2) {
             System.out.println(s);
         }
+
+        //-----------------------HashSet-----------------------
+        System.out.println("------------HashSet---------");
+
+        HashSet<Object> set = new HashSet<>();
+
+        set.add(new Student("Alice", 35, 85));
+        set.add(new Student("Alice", 35, 85));
+
+        System.out.println(new Student("Alice", 35, 85).hashCode());
+        System.out.println(new Student("Alice", 35, 85).hashCode());
+
+        for (Object s : set) {
+            System.out.println(s);
+        }
     }
 }
 
@@ -202,6 +219,19 @@ class Student implements Comparable<Student> {
     public int compareTo(Student o) {
         // 年龄不同 → 按年龄升序；年龄相同 → 按姓名（字典序）升序
         return this.age - o.age != 0 ? this.age - o.age : this.name.compareTo(o.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.name, this.age, this.score);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return age == student.age && score == student.score && name.equals(student.name);
     }
 }
 
