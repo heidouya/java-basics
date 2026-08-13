@@ -171,7 +171,14 @@ public class Demo6 {
 
         //----------------------------------------
 
-        TreeSet<Student> treeSet2 = new TreeSet<>(new StudentComparator());
+        //TreeSet<Student> treeSet2 = new TreeSet<>(new StudentComparator());
+        // 匿名内部类
+        TreeSet<Student> treeSet2 = new TreeSet<>(new Comparator<Student>() {
+            @Override
+            public int compare(Student o1, Student o2) {
+                return o1.score - o2.score;
+            }
+        });
 
         treeSet2.add(new Student("Alice", 35, 85));
         treeSet2.add(new Student("Bob", 30, 90));
