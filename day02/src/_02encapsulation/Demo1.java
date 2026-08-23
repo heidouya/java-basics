@@ -1,4 +1,4 @@
-package _02encapsulation;
+//package _02encapsulation;
 
 /*
     封装：封装是面向对象编程的三大特性之一（封装、继承、多态），指将数据（属性）和操作数据的方法（行为）绑定在一起，并隐藏内部实现细节，只对外提供必要的访问接口。
@@ -37,75 +37,75 @@ package _02encapsulation;
 
 // 面向过程：属性直接暴露，任何人可随意修改
 // 问题：属性无保护，外部可随意赋值非法数据，逻辑分散，出错后难排查。
+
+// 面向过程编程示例
+// 全局变量，任何地方都可以直接访问和修改
+String accountNumber;
+double balance;
+String password;
+
+void main(String[] args) {
+    // 初始化账户
+    accountNumber = "123456";
+    balance = 1000;
+    password = "123456";
+
+    // 使用函数操作
+    withdraw(200, "123456");
+    withdraw(5000, "123456");  // 会提示余额不足
+
+    // 存在的问题：
+    // 1. 可以直接绕过函数修改数据
+    balance = balance - 100;  // 仍然可以直接操作
+
+    // 2. 需要在每个函数中都写验证逻辑
+    // 3. 所有函数都是全局的，容易命名冲突
+    // 4. 数据和操作分离，维护困难
+}
+
+// 取款函数
+void withdraw(double amount, String pwd) {
+    // 验证逻辑
+    if (!pwd.equals(password)) {
+        System.out.println("密码错误");
+        return;
+    }
+    if (amount <= 0) {
+        System.out.println("取款金额必须大于0");
+        return;
+    }
+    if (amount > balance) {
+        System.out.println("余额不足");
+        return;
+    }
+
+    // 执行取款
+    balance = balance - amount;
+    System.out.println("取款成功，余额：" + balance);
+}
+
+// 存款函数
+void deposit(double amount) {
+    // 验证逻辑
+    if (amount <= 0) {
+        System.out.println("存款金额必须大于0");
+        return;
+    }
+
+    // 执行存款
+    balance = balance + amount;
+    System.out.println("存款成功，余额：" + balance);
+}
+
 //public class Demo1 {
-//    // 全局变量，任何地方都可以直接访问和修改
-//    public static String accountNumber;
-//    public static double balance;
-//    public static String password;
-//
 //    public static void main(String[] args) {
-//        // 初始化账户
-//        accountNumber = "123456";
-//        balance = 1000;
-//        password = "123456";
+//        BankAccount1 bankAccount = new BankAccount1();
 //
-//        // 使用函数操作
-//        withdraw(200, "123456");
-//        withdraw(5000, "123456");  // 会提示余额不足
+//        bankAccount.accountNumber = "0123456789";
+//        bankAccount.balance = 100;
+//        bankAccount.password = "123456";
 //
-//        // 存在的问题：
-//        // 1. 可以直接绕过函数修改数据
-//        balance = balance - 100;  // 仍然可以直接操作
-//
-//        // 2. 需要在每个函数中都写验证逻辑
-//        // 3. 所有函数都是全局的，容易命名冲突
-//        // 4. 数据和操作分离，维护困难
-//    }
-//
-//    // 取款函数
-//    public static void withdraw(double amount, String pwd) {
-//        // 验证逻辑
-//        if (!pwd.equals(password)) {
-//            System.out.println("密码错误");
-//            return;
-//        }
-//        if (amount <= 0) {
-//            System.out.println("取款金额必须大于0");
-//            return;
-//        }
-//        if (amount > balance) {
-//            System.out.println("余额不足");
-//            return;
-//        }
-//
-//        // 执行取款
-//        balance = balance - amount;
-//        System.out.println("取款成功，余额：" + balance);
-//    }
-//
-//    // 存款函数
-//    public static void deposit(double amount) {
-//        // 验证逻辑
-//        if (amount <= 0) {
-//            System.out.println("存款金额必须大于0");
-//            return;
-//        }
-//
-//        // 执行存款
-//        balance = balance + amount;
-//        System.out.println("存款成功，余额：" + balance);
+//        bankAccount.deposit(100);
+//        bankAccount.withdraw(50,"123456");
 //    }
 //}
-
-public class Demo1 {
-    public static void main(String[] args) {
-        BankAccount1 bankAccount = new BankAccount1();
-
-        bankAccount.accountNumber = "0123456789";
-        bankAccount.balance = 100;
-        bankAccount.password = "123456";
-
-        bankAccount.deposit(100);
-        bankAccount.withdraw(50,"123456");
-    }
-}
