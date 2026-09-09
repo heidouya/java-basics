@@ -24,6 +24,10 @@ public class Animal {
     public void makeSound() {
         System.out.println("动物发出声音");
     }
+
+    public Animal test() throws Exception{
+        return new Animal("a",1);
+    }
 }
 
 

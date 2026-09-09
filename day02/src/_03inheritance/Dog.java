@@ -10,4 +10,9 @@ public class Dog extends Animal {
     public void makeSound() {
         System.out.println("汪汪汪");  // 重写父类方法
     }
+
+    //@Override
+    //public Dog test() throws Throwable {
+    //    return new Dog(); // Changed from return "a";
+    //}
 }
