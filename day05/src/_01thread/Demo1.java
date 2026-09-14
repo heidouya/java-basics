@@ -100,7 +100,7 @@ public class RunnableDemo implements Runnable {
 }
 ```
 
-3. **实现 Callable 接口** \+ FutureTask：有返回值、可抛异常，`call()`方法
+3. **实现 Callable 接口** + FutureTask：有返回值、可抛异常，`call()`方法
 
 Runnable的run无返回值，Callable的`call()`有返回值
 
@@ -167,7 +167,7 @@ public class ThreadPoolDemo {
 
 - **运行 RUNNING**：拿到 CPU 时间片，执行 run
 
-- **阻塞 BLOCKED/WAITING/TIMED\_WAITING**：等待锁、sleep、wait 等，让出 CPU
+- **阻塞 BLOCKED/WAITING/TIMED_WAITING**：等待锁、sleep、wait 等，让出 CPU
 
 - **终止 TERMINATED**：run 执行完毕或异常退出
 
