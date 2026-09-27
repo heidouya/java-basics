@@ -161,15 +161,39 @@ public class ThreadPoolDemo {
 
 ## 5. 线程 5 大状态
 
-- **新建 NEW**：new Thread () 之后，未 start
+## Java线程6种状态（`java.lang.Thread.State`枚举，官方标准）
+> 注意：不是课本旧说法的5种，**JDK定义一共6种**
 
-- **就绪 RUNNABLE**：调用 start ()，等待 CPU 分配时间片
+1. **NEW（新建）**
+线程对象创建好，但还没调用`start()`，只是个对象，操作系统里还没有真正线程。
+2. **RUNNABLE（可运行）**
+调用`start()`后。包含两种情况：正在CPU运行 / 等待CPU分配时间片。
+> 很多人误区：不是“运行中”，是可就绪+运行合并在一起。
 
-- **运行 RUNNING**：拿到 CPU 时间片，执行 run
+3. **BLOCKED（阻塞）**
+等待synchronized锁，没拿到锁，卡在锁外面。
+4. **WAITING（无限等待）**
+无限期等别人唤醒。调用`wait()`、`join()`、`LockSupport.park()`进入。
+必须被其他线程主动唤醒（notify / notifyAll）才会恢复。
+5. **TIMED_WAITING（限时等待）**
+带超时时间的等待。`sleep(毫秒)`、`wait(时间)`、`join(时间)`、`LockSupport.parkNanos()`。时间到自动醒来。
+6. **TERMINATED（终止）**
+线程代码执行完毕，或者异常退出，线程生命周期结束。
 
-- **阻塞 BLOCKED/WAITING/TIMED_WAITING**：等待锁、sleep、wait 等，让出 CPU
+### 简单流转关系
+NEW → RUNNABLE
+RUNNABLE遇到synchronized抢不到锁 → BLOCKED
+RUNNABLE调用wait/join → WAITING
+RUNNABLE调用sleep → TIMED_WAITING
+RUNNABLE执行完/异常 → TERMINATED
 
-- **终止 TERMINATED**：run 执行完毕或异常退出
+### 区分重点（面试高频坑）
+- `sleep()`不会释放锁；`wait()`会释放锁
+- BLOCKED：只针对synchronized排他锁
+- RUNNABLE不是一定正在跑，只是具备运行资格
+
+### 极简记忆口诀
+新建、可运行、锁阻塞、无限等、限时等、已终止。
 
 ## 6. 常用方法
 
