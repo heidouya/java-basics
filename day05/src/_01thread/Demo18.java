@@ -1,4 +1,8 @@
 package _01thread;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /*
 # 为啥生产环境不推荐使用Executors.newFixedThreadPool()、Executors.newSingleThreadExecutor()、Executors.newCachedThreadPool()创建线程池呢
 
@@ -116,4 +120,41 @@ ThreadPoolExecutor pool = new ThreadPoolExecutor(
 > newFixedThreadPool、newSingleThreadExecutor 使用无界队列，任务堆积会OOM；newCachedThreadPool最大线程数无上限，高并发下无限创建线程，耗尽资源。生产禁止使用Executors快捷创建线程池，手动创建ThreadPoolExecutor并指定有界队列。
 */
 public class Demo18 {
+    public static void main(String[] args) {
+        //ExecutorService pool = Executors.newCachedThreadPool();
+
+        ExecutorService pool = Executors.newFixedThreadPool(3);
+
+        // 提交任务
+        pool.submit(() -> {
+            System.out.println(Thread.currentThread().getName());
+        });
+
+        pool.submit(() -> {
+            System.out.println(Thread.currentThread().getName());
+        });
+
+        pool.submit(() -> {
+            System.out.println(Thread.currentThread().getName());
+        });
+
+        pool.submit(() -> {
+            System.out.println(Thread.currentThread().getName());
+        });
+
+        //pool.submit(new MyRunnable2());
+        //pool.submit(new MyRunnable2());
+        //pool.submit(new MyRunnable2());
+        //pool.submit(new MyRunnable2());
+
+        // 销毁线程池
+        pool.shutdown();
+    }
+}
+
+class MyRunnable2 implements Runnable {
+    @Override
+    public void run() {
+        System.out.println(Thread.currentThread().getName());
+    }
 }
