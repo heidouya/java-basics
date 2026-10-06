@@ -52,47 +52,95 @@ package _05static;
     2. 非静态成员属于对象，每个对象独有，必须创建对象才能使用；
     3. 静态方法的核心限制：不能访问非静态成员，也不能用this/super关键字。
 */
+//public class Demo1 {
+//    public static void main(String[] args) {
+//        // 1. 静态变量/方法：直接通过类名调用，无需new对象
+//        System.out.println(Student.school); // 输出：北京大学
+//        Student.showSchool(); // 输出：学校：北京大学
+//
+//        // 2. 非静态变量/方法：必须创建对象调用
+//        Student stu = new Student();
+//        stu.name = "张三";
+//        stu.showInfo(); // 输出：姓名：张三，学校：北京大学
+//
+//        // 3. 静态变量被所有对象共享
+//        Student stu2 = new Student();
+//        stu2.name = "李四";
+//        Student.school = "清华大学"; // 修改静态变量
+//        stu.showInfo(); // 输出：姓名：张三，学校：清华大学
+//        stu2.showInfo(); // 输出：姓名：李四，学校：清华大学
+//
+//        Student.showSchool2(stu);
+//    }
+//}
+//class Student {
+//    // 静态变量：所有学生共享的学校名称
+//    public static String school = "北京大学";
+//    // 非静态变量：每个学生独有的姓名
+//    public String name;
+//
+//    // 静态方法：直接通过类名调用
+//    public static void showSchool() {
+//        System.out.println("学校：" + school);
+//        // 错误：静态方法不能访问非静态变量name
+//        // 如果非要访问需要通过对象引用，也就是把对象实例的引用当参数传递过来，详见 showSchool2 方法
+//        // System.out.println(name);
+//    }
+//
+//    public static void showSchool2(Student student) {
+//        System.out.println("showSchool2 " + student.name);
+//    }
+//
+//    // 非静态方法：需创建对象调用，可访问静态/非静态成员
+//    public void showInfo() {
+//        System.out.println("姓名：" + name + "，学校：" + school);
+//    }
+//}
+
 public class Demo1 {
     public static void main(String[] args) {
-        // 1. 静态变量/方法：直接通过类名调用，无需new对象
-        System.out.println(Student.school); // 输出：北京大学
-        Student.showSchool(); // 输出：学校：北京大学
+        TsinghuaStudent student1 = new TsinghuaStudent("张三");
+        TsinghuaStudent student2 = new TsinghuaStudent("李四");
+        TsinghuaStudent student3 = new TsinghuaStudent("王五");
 
-        // 2. 非静态变量/方法：必须创建对象调用
-        Student stu = new Student();
-        stu.name = "张三";
-        stu.showInfo(); // 输出：姓名：张三，学校：北京大学
+        System.out.println(TsinghuaStudent.totalCount);
+        System.out.println(TsinghuaStudent.getTotalCount());
 
-        // 3. 静态变量被所有对象共享
-        Student stu2 = new Student();
-        stu2.name = "李四";
-        Student.school = "清华大学"; // 修改静态变量
-        stu.showInfo(); // 输出：姓名：张三，学校：清华大学
-        stu2.showInfo(); // 输出：姓名：李四，学校：清华大学
+        String schoolName =  TsinghuaStudent.schoolName;
+        int totalCount = TsinghuaStudent.getTotalCount();
+        System.out.println(STR."学校名：\{schoolName} \n现在创建了\{totalCount}个学生");
 
-        Student.showSchool2(stu);
+        student3.printInfo();
+
+        TsinghuaStudent student4 = new TsinghuaStudent("赵四");
+        // 使用对象实例也能访问静态变量，但这是为了兼容性，编译后还是使用的类，JVM 根本不看这个对象，它直接去找【类本身】的静态成员
+        // 不要使用对象访问静态变量
+        //student4.schoolName = "北京大学";
+
+        //甚至！对象可以是`null`，照样能访问静态成员
+        //原因：编译后变成`TsinghuaStudent.schoolName`，运行时根本不会去使用 student5 这个引用
+        TsinghuaStudent student5= new TsinghuaStudent("赵四");
+        student5.schoolName = "北京大学";
+
+        student3.printInfo();
     }
 }
-class Student {
-    // 静态变量：所有学生共享的学校名称
-    public static String school = "北京大学";
-    // 非静态变量：每个学生独有的姓名
+
+class TsinghuaStudent {
     public String name;
+    public static int totalCount = 0;
+    public static String schoolName = "清华大学";
 
-    // 静态方法：直接通过类名调用
-    public static void showSchool() {
-        System.out.println("学校：" + school);
-        // 错误：静态方法不能访问非静态变量name
-        // 如果非要访问需要通过对象引用，也就是把对象实例的引用当参数传递过来，详见 showSchool2 方法
-        // System.out.println(name);
+    public TsinghuaStudent(String name) {
+        this.name = name;
+        totalCount++;
     }
 
-    public static void showSchool2(Student student) {
-        System.out.println("showSchool2 " + student.name);
+    public static int getTotalCount() {
+        return totalCount;
     }
 
-    // 非静态方法：需创建对象调用，可访问静态/非静态成员
-    public void showInfo() {
-        System.out.println("姓名：" + name + "，学校：" + school);
+    public void printInfo() {
+        System.out.println(STR."姓名：\{name}，学校：\{schoolName}");
     }
 }
