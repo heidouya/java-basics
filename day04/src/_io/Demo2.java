@@ -1,7 +1,10 @@
 package _io;
 
 import java.io.File;
+import java.io.FileFilter;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.Arrays;
 
 /*
 ## Java File 类简介
@@ -98,7 +101,7 @@ Files.delete(path);
 > `File` 是传统方式，简单直观，适合入门学习；`Path`/`Files` 更强大、更安全，是官方推荐的新方向。
 */
 public class Demo2 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         File file = new File("hello.txt");
 
         boolean exists = file.exists();
@@ -120,10 +123,38 @@ public class Demo2 {
         // 相对路径是相对于进程的工作目录，不是源代码文件的位置。
         System.out.println(STR."当前工作目录：\{System.getProperty("user.dir")}");
 
+        // 创建文件、删除文件
+        // 1. 文件不存在，则创建文件，返回true
+        // 2. 文件存在，创建失败，返回false
+        // 3. 如果父级路径不存在则会报错
+        // 4. 如果给的路径没有后缀，会创建一个没有后缀的文件
+        File file1 = new File("newFile.txt");
+        boolean isCreate = file1.createNewFile();
+        System.out.println(isCreate);
+
+        //mkdir() 创建单级文件夹
+        File file2 = new File("d");
+        boolean mkdir = file2.mkdir();
+        System.out.println(mkdir);
+
+        // mkdirs() 创建多级文件夹
+        File file3 = new File("d/e/f");
+        boolean mkdirs = file3.mkdirs();
+        System.out.println(mkdirs);
+
+        // delete() 删除文件、空文件夹 不会放到回收站
+        File file4 = new File("newFile.txt");
+        boolean delete = file4.delete();
+        System.out.println(delete);
+
+        // 获取所有盘符
+        File[] files1 = File.listRoots();
+        System.out.println(Arrays.toString(files1));
+
         System.out.println("------------------listFiles 遍历目录--------------");
 
         // 遍历目录
-        File dir = new File("D:/learn/code/java/JavaBasics/day04/src/_io");
+        File dir = new File("day04/src/_io");
         // listFiles() 返回子文件/目录对象数组（File[]）
         File[] files = dir.listFiles();
         if (files != null) {
@@ -131,6 +162,37 @@ public class Demo2 {
                 System.out.println(f.getName() + (f.isDirectory() ? " [目录]" : ""));
             }
         }
+
+        System.out.println("------listFiles(new FileFilter())------");
+        File[] files2 = dir.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+                return file.isFile() && file.getName().endsWith(".java");
+            }
+        });
+        System.out.println(Arrays.toString(files2));
+
+        System.out.println("\n------listFiles(new FileFilter()) lambda 表达式写法------");
+
+        File[] files4 = dir.listFiles((File f) -> f.isFile() && f.getName().endsWith(".java"));
+        System.out.println(Arrays.toString(files4));
+
+        File[] files3 = dir.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                File file = new File(dir, name);
+                return file.isFile() && file.getName().endsWith(".java");
+            }
+        });
+        System.out.println(Arrays.toString(files3));
+
+        System.out.println("\n---------listFiles(new FilenameFilter()) lambda 表达式写法-------");
+
+        File[] files5 = dir.listFiles((File d, String name) -> {
+            File f = new File(d, name);
+            return f.isFile() && name.endsWith(".java");
+        });
+        System.out.println(Arrays.toString(files5));
 
         System.out.println("------------------list 遍历目录--------------");
 
@@ -140,6 +202,24 @@ public class Demo2 {
             for (String name : list) {
                 System.out.println(name);
             }
+        }
+
+        File file5 = new File("temp");
+        String[] list1 = file5.list(new FilenameFilter() {
+            /*
+             accept 方法参数说明:
+             dir: 父级路径
+             name: 文件名
+             返回值: 仅当名称应包含在文件列表中时为 true，否则为 false
+             */
+            @Override
+            public boolean accept(File dir, String name) {
+                File file6 = new File(dir, name);
+                return file6.isFile() && name.endsWith(".md");
+            }
+        });
+        for (String s : list1) {
+            System.out.println(s);
         }
     }
 }
