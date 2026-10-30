@@ -35,9 +35,10 @@ package _07interface;
 */
 public class Demo1 {
     public static void main(String[] args) {
-        // 多态：接口引用指向实现类对象
-        Dog dog = new Dog();
-        dog.run();
+        // 接口可以实现多态，可以用接口类型接收是心啊类对象
+        Animal dog = new Dog();
+        // 此时只能调用接口中声明的方法
+        //dog.run();
         dog.eat();
         dog.breathe(); // 调用默认方法
     }

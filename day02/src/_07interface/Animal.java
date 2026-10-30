@@ -12,4 +12,14 @@ public interface Animal {
     default void breathe() {
         System.out.println("用氧气呼吸");
     }
+
+    // 静态方法
+    static void test1() {
+        System.out.println("静态方法");
+    }
+
+    // 私有方法
+    private void test2() {
+        System.out.println("私有方法");
+    }
 }

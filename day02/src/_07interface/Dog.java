@@ -5,7 +5,8 @@ package _07interface;
 public class Dog implements Animal, Runnable {
     public Dog() {
         //Cannot assign a value to final variable 'TYPE'
-        //Animal.TYPE = "";
+        System.out.println(Animal.TYPE);
+        Animal.test1();
         System.out.println(STR."狗是\{Animal.TYPE}");
     }
 
@@ -18,5 +19,9 @@ public class Dog implements Animal, Runnable {
     @Override
     public void run() {
         System.out.println("狗四处跑");
+    }
+
+    public void sound() {
+        System.out.println("汪汪汪");
     }
 }
